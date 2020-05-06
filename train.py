@@ -1,9 +1,10 @@
 import sys
 import numpy as np 
-from keras.models import Sequential
+from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
+import pickle
 
 filename = "wonderland.txt"
 raw_text = open(filename, 'r', encoding='utf-8').read()
@@ -13,8 +14,21 @@ chars = sorted(list(set(raw_text)))
 char_to_int = dict((c, i) for i,c in enumerate(chars))
 int_to_char = dict((i, c) for i,c in enumerate(chars))
 
+ci  =  open("variables/c2i.pkl", "wb")
+pickle.dump(char_to_int, ci)
+ci.close()
+
+ic = open("variables/i2c.pkl", "wb")
+pickle.dump(int_to_char, ic)
+ic.close()
+
 n_chars = len(raw_text)
 n_vocab = len(chars)
+
+voc = open("variables/n_vocab.pkl", "wb")
+pickle.dump(n_vocab, voc)
+voc.close()
+
 print("total characters", n_chars)
 print("total vocab", n_vocab)
 
@@ -37,6 +51,7 @@ X =X/ float(n_vocab)
 y = np_utils.to_categorical(dataY)
 
 
+
 model = Sequential()
 model.add(LSTM(256, input_shape = (X.shape[1], X.shape[2]), return_sequences = True))
 model.add(Dropout(0.2))
@@ -45,9 +60,11 @@ model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss = 'categorical_crossentropy', optimizer='adam')
 
-filepath = "weights-improvement-{epoch:02d}-{loss:.4f}-biggeer.hdf5"
+filepath = "weights/weights-improvement-{epoch:02d}-{loss:.4f}-biggee.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose = 1, save_best_only=True, mode = 'min')
 callbacks_list = [checkpoint]
+
+model = load_model("weights-improvement-02-2.5458-biggeer.hdf5")
 
 model.fit(X, y, epochs = 50, batch_size=64, callbacks=callbacks_list)
 model.save("model.hdf5", model)

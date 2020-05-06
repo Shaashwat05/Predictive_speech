@@ -1,15 +1,9 @@
 import speech_recognition as sr 
 import pyttsx3  
 from pydub import AudioSegment
-from lookup import lookup,init,get_sites
-from clean import cleanup, array
+from predict import init, predict
 
-
-
-web = cleanup()
-key_words = array(web)
-
-kw = init(key_words)
+#model, int_to_char, char_to_int, n_vocab = init()
 
 r = sr.Recognizer()
 
@@ -19,15 +13,14 @@ while(1):
 
         with sr.Microphone() as source2:
 
-            r.adjust_for_ambient_noise(source2, duration=2)
+            r.adjust_for_ambient_noise(source2, duration=0.2)
 
             audio2 = r.listen(source2)
 
             Mytext = r.recognize_google(audio2)
             Mytext = Mytext.lower()
-            sites = lookup(kw, Mytext)
-            site = get_sites(sites,key_words, web)
-            print(site)
+            print(Mytext)
+
 
             
 
