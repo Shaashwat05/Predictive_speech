@@ -1,10 +1,11 @@
-from keras.models import load_model
+import tensorflow as tf
+from tensorflow.keras.models import load_model
 import numpy as np 
 import pickle
 
 
 def init():
-    model = load_model("weights/weights-improvement-02-2.2221-biggee.hdf5")
+    model = load_model("weights/model.hdf5")
 
     char_to_int = pickle.load(open("variables/c2i.pkl", "rb"))
     int_to_char = pickle.load(open("variables/i2c.pkl", "rb"))
@@ -14,20 +15,31 @@ def init():
 
 
 
-def predict(text_in, char_to_int, int_to_char, n_vocab):
-    text=[]
-    text.append(char_to_int[i] for i in text_in) 
+def predict(text_in, char_to_int, int_to_char, model, n_vocab):
+    text1=[]
+    out = ''
+    print(text_in)
+    for i in text_in:
+        text1.append(char_to_int[i]) 
     for i in range(100):
-        text = np.reshape(text, (1, len(text), 1))
+        text = np.reshape(text1, (1, len(text1), 1))
         text = text /float(n_vocab)
-        predict = model.predict(x, verbose = 0)
+        predict = model.predict(text, verbose = 0)
         index = np.argmax(predict)
         result = int_to_char[index]
-        seq_in = [int_to_char[value] for value in text]
-        text.append(index)
-        text = text[1:len(text)]
+        seq_in = [int_to_char[value] for value in text1]
+        out +=result
+        text1.append(index)
+        text1 = text1[1:len(text1)]
 
-    return text
+    return out
 
+'''
+model, char_to_int, int_to_char, n_vocab = init()
+
+text_in = "hashwat.i study in assam valley school.i want to be a engineer one day.i want to study in iit mumbai"
+
+text = predict(text_in, char_to_int, int_to_char, model, n_vocab)
+print(text)'''
 
 

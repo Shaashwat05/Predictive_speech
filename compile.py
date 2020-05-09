@@ -1,10 +1,15 @@
 import speech_recognition as sr 
 import pyttsx3  
-from pydub import AudioSegment
 from predict import init, predict
 import time
+from show import show_init, paint, pred_show
 
-model, int_to_char, char_to_int, n_vocab = init()
+screen = show_init()
+
+posx = 0
+posy = 0
+model, char_to_int, int_to_char, n_vocab = init()
+print(char_to_int)
 
 r = sr.Recognizer()
 audio3=[]
@@ -15,21 +20,22 @@ while(1):
         start = time.time()
         with sr.Microphone() as source2:
 
-            r.adjust_for_ambient_noise(source2, duration=0.5)
+            r.adjust_for_ambient_noise(source2, duration=0.1)
 
             audio2 = r.listen(source2)
             audio3.append(audio2)
 
             Mytext = r.recognize_google(audio2)
             Mytext = Mytext.lower()
-            text  += ' '+ Mytext
+            posx, posy = paint(screen, Mytext, posx, posy)
+            text  += '.'+ Mytext
             print(len(text))
             if(len(text) > 100):
-                print(text)
                 text = text[(len(text)-100):len(text)]
+                print(text)
                 Predicted_text = predict(text, char_to_int, int_to_char, model, n_vocab)
-                print("\n")
-                print(Predicted_text)
+                pred_show(screen, Predicted_text, posx, posy)
+                
 
 
 
