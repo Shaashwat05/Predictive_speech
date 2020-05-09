@@ -32,31 +32,19 @@ def paint(screen, txt, posx, posy):
 
     pygame.display.update()
     
-    # infinite loop 
-    disp = True
-    while disp : 
-        for i in range(len(txt)):
+    for i in range(len(txt)):
             text2 = font.render(txt[i], True, green) 
             screen.blit(text2, (posx +(font.size(txt[:i])[0]), posy)) 
             pygame.display.update()
-            clock.tick(10)
+            clock.tick(12)
     
-        for event in pygame.event.get() : 
-
-            if event.type == pygame.QUIT : 
-
-                pygame.quit() 
-    
-                quit() 
-    
-            pygame.display.update()  
-            break
-        disp = False
 
     #if(count == 1):
     posx += textRect[2]
     
     return posx, posy
+
+
 
 def pred_show(screen, txt, posx, posy):
 
@@ -79,8 +67,10 @@ def pred_show(screen, txt, posx, posy):
     
     # infinite loop 
     disp = True
+    screen.blit(text, (posx, posy)) 
+    '''
     while disp : 
-        screen.blit(text, (posx, posy)) 
+        
     
         for event in pygame.event.get() : 
 
@@ -92,7 +82,7 @@ def pred_show(screen, txt, posx, posy):
     
             pygame.display.update()  
             break
-        disp = False
+        disp = False'''
 
 
 '''

@@ -22,19 +22,23 @@ while(1):
 
             r.adjust_for_ambient_noise(source2, duration=0.1)
 
-            audio2 = r.listen(source2)
-            audio3.append(audio2)
+            speaking = True
 
-            Mytext = r.recognize_google(audio2)
-            Mytext = Mytext.lower()
-            posx, posy = paint(screen, Mytext, posx, posy)
-            text  += '.'+ Mytext
-            print(len(text))
-            if(len(text) > 100):
-                text = text[(len(text)-100):len(text)]
-                print(text)
-                Predicted_text = predict(text, char_to_int, int_to_char, model, n_vocab)
-                pred_show(screen, Predicted_text, posx, posy)
+            while(speaking):
+
+                audio2 = r.listen(source2)
+
+                Mytext = r.recognize_google(audio2)
+                Mytext = Mytext.lower()
+                posx, posy = paint(screen, Mytext, posx, posy)
+                text  += '.'+ Mytext
+                print(len(text))
+                if(len(text) > 100):
+                    text = text[(len(text)-100):len(text)]
+                    print(text)
+                    Predicted_text = predict(text, char_to_int, int_to_char, model, n_vocab)
+                    print(Predicted_text)
+                    pred_show(screen, Predicted_text, posx, posy)
                 
 
 
