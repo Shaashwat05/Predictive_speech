@@ -14,13 +14,14 @@ print(char_to_int)
 r = sr.Recognizer()
 audio3=[]
 text = ''
-while(1):
+start = True
+while(start):
 
     try:
         start = time.time()
         with sr.Microphone() as source2:
 
-            r.adjust_for_ambient_noise(source2, duration=0.1)
+            r.adjust_for_ambient_noise(source2, duration=0.3)
 
             speaking = True
 
@@ -40,6 +41,9 @@ while(1):
                     print(Predicted_text)
                     pred_show(screen, Predicted_text, posx, posy)
                 
+                if(text[len(text)-4:] == 'quit'):
+                    speaking = False
+                    start = False
 
 
 
