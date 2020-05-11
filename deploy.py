@@ -1,6 +1,7 @@
 from watson_machine_learning_client import WatsonMachineLearningAPIClient
 from contextlib import suppress
 import os
+import pickle
 
 wml_credentials={
   "url": "xxxxxxxxxxxxxxxxxx",
@@ -32,4 +33,14 @@ model_props = {
 
 published_model_details = client.repository.store_model(model=tar_filename, meta_props=model_props)       
 
+model_uid = client.repository.get_model_uid(published_model_details)
+print(model_uid)
+
+
+
+deployment = client.deployments.create(model_uid, 'Keras MNIST model deployment through compressed file.')
+
+dp = open("variables/deployment.pkl", 'wb')
+pickle.dump(dp, deployment)
+dp.close()
 

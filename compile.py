@@ -4,14 +4,20 @@ from predict import init, predict
 import time
 from show import show_init, paint, pred_show
 
+#pygame initialization
 screen = show_init()
 
 posx = 0
 posy = 0
-model, char_to_int, int_to_char, n_vocab = init()
+
+#model initialization
+client, char_to_int, int_to_char, n_vocab, scoring_endpoint = init()
 print(char_to_int)
 
+
+#speech recognizer initialization
 r = sr.Recognizer()
+
 audio3=[]
 text = ''
 start = True
@@ -37,7 +43,7 @@ while(start):
                 if(len(text) > 100):
                     text = text[(len(text)-100):len(text)]
                     print(text)
-                    Predicted_text = predict(text, char_to_int, int_to_char, model, n_vocab)
+                    Predicted_text = predict(text, char_to_int, int_to_char, client, n_vocab, scoring_endpoint)
                     print(Predicted_text)
                     pred_show(screen, Predicted_text, posx, posy)
                 
