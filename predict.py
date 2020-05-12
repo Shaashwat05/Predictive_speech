@@ -1,4 +1,4 @@
-import tensorflow as tf
+#import tensorflow as tf
 from tensorflow.keras.models import load_model
 import numpy as np 
 import pickle
@@ -6,14 +6,16 @@ from watson_machine_learning_client import WatsonMachineLearningAPIClient
 
 
 def init():
+    #model = load_model("model.hdf5")
 
+    
     wml_credentials={
     "url": "xxxxxxxxxxxxxxxxxx",
     "apikey": "xxxxxxxxxxxxxxxxxxxxxxx",
     "username": "xxxxxxxxxxxxxxxxxxxx",
     "password": "xxxxxxxxxxxxxxxxxxxxxxx",
-    "instance_id": "xxxxxxxxxxxxxxxxxxxxxx"
-    }
+    "instance_id": "xxxxxxxxxxxxxxxxxxxxxx"}
+    
 
     # IBM deployment initialization
     client = WatsonMachineLearningAPIClient(wml_credentials)
@@ -40,6 +42,7 @@ def predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint
         text = text /float(n_vocab)
         scoring_payload = {'values': text}
         predict = client.deployments.score(scoring_endpoint, scoring_payload)
+        #predict = model.predict(text, verbose = 0)
         index = np.argmax(predict)
         result = int_to_char[index]
         #seq_in = [int_to_char[value] for value in text1]
@@ -52,10 +55,7 @@ def predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint
 '''
 model, char_to_int, int_to_char, n_vocab = init()
 
-text_in = "hashwat.i study in assam valley school.i want to be a engineer one day.i want to study in iit mumbai"
+text_in = "alice was beginning to get very tired of sitting by her sister on thebank, and of having nothing to."
 
 text = predict(text_in, char_to_int, int_to_char, model, n_vocab)
-print(text)'''
-import keras
-
-print(keras.__version__)
+print(len(text))'''

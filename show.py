@@ -1,9 +1,10 @@
 import pygame
+import time
 
 def show_init():
     pygame.init()
 
-    screen_size=(800, 600)
+    screen_size=(1500, 600)
     screen=pygame.display.set_mode(screen_size)
 
     pygame.display.set_caption('Show speech') 
@@ -11,11 +12,13 @@ def show_init():
     return screen
 
 def paint(screen, txt, posx, posy):
+    font = pygame.font.Font('freesansbold.ttf', 18) 
+
+    screen.fill((0, 0, 0), rect=[posx, posy, (font.size(txt[0])[0]*100), 20])
+
     clock = pygame.time.Clock()
 
     green = (0, 255, 0) 
-
-    font = pygame.font.Font('freesansbold.ttf', 18) 
 
     text = font.render(txt, True, green) 
     
@@ -42,7 +45,7 @@ def paint(screen, txt, posx, posy):
     #if(count == 1):
     posx += textRect[2]
     
-    return posx, posy
+    return pygame.display.get_surface(), posx, posy
 
 
 
@@ -54,39 +57,26 @@ def pred_show(screen, txt, posx, posy):
     font = pygame.font.Font('freesansbold.ttf', 18) 
 
     text = font.render(txt, True, green, blue) 
-    
     # create a rectangular object for the 
     # text surface object 
     textRect = text.get_rect() 
     if((posx + textRect[2]) <= 800):
+        print(str(posx+textRect[2])+ "ii")
         textRect = textRect.move(posx, posy)
     else:
-        textRect = textRect.move(0, posy + textRect[3])
+        print(str(textRect[3]+ posy) + "jj")
+        textRect = textRect.move(0, 300)
         #posx += textRect[2]
     pygame.display.update()
     
     # infinite loop 
-    disp = True
     screen.blit(text, (posx, posy)) 
-    '''
-    while disp : 
-        
-    
-        for event in pygame.event.get() : 
+    pygame.display.update()
+    return pygame.display.get_surface()
 
-            if event.type == pygame.QUIT : 
-
-                pygame.quit() 
-    
-                quit() 
-    
-            pygame.display.update()  
-            break
-        disp = False'''
 
 
 '''
-
 screen = show_init()
 posx = 0
 posy = 0
