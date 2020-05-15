@@ -11,7 +11,7 @@ posx = 0
 posy = 0
 
 #model initialization
-client, char_to_int, int_to_char, n_vocab, scoring_endpoint = init()
+model, char_to_int, int_to_char, n_vocab = init()
 
 
 #speech recognizer initialization
@@ -21,27 +21,25 @@ m = sr.Microphone()
 audio3=[]
 text = ''
 start = True
+time.sleep(15)
 while(start):
 
     try:
-        start = time.time()
         with m as source:
 
             r.adjust_for_ambient_noise(source)
-
+            
             
             print("start speaking")
-            audio2 = r.listen(source)
-            print("listen" , (time.time() - start))
-            Mytext = r.recognize_google(audio2)
-            print("text", (time.time()-start))
+            audio = r.listen(source)
+            Mytext = r.recognize_google(audio)
             Mytext = Mytext.lower()
             Mytext += '. '  
             screen, posx, posy = paint(screen, Mytext, posx, posy)
-            print("pygame", (time.time()-start))
+            text += Mytext
             if(len(text) > 100):
                 text = text[(len(text)-100):len(text)]
-                Predicted_text = predict(text, char_to_int, int_to_char, client, n_vocab, scoring_endpoint)
+                Predicted_text = predict(text, char_to_int, int_to_char, model, n_vocab)
                 print(Predicted_text)
                 screen = pred_show(screen, Predicted_text, posx, posy)
             

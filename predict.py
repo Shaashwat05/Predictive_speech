@@ -6,7 +6,7 @@ from watson_machine_learning_client import WatsonMachineLearningAPIClient
 
 
 def init():
-    #model = load_model("model.hdf5")
+    model = load_model("weights/model.hdf5")
 
     
     wml_credentials={
@@ -14,18 +14,20 @@ def init():
     "apikey": "xxxxxxxxxxxxxxxxxxxxxxx",
     "username": "xxxxxxxxxxxxxxxxxxxx",
     "password": "xxxxxxxxxxxxxxxxxxxxxxx",
-    "instance_id": "xxxxxxxxxxxxxxxxxxxxxx"}
+    "instance_id": "xxxxxxxxxxxxxxxxxxxxxx"
+    }
     
 
     # IBM deployment initialization
     client = WatsonMachineLearningAPIClient(wml_credentials)
 
-    deployment = pickle.load("variables/deployment.pkl", "rb")
+    #deployment = pickle.load(open("variables/deployment.pkl", "rb"))
     char_to_int = pickle.load(open("variables/c2i.pkl", "rb"))
     int_to_char = pickle.load(open("variables/i2c.pkl", "rb"))
     n_vocab = pickle.load(open("variables/n_vocab.pkl", "rb"))
 
-    scoring_endpoint = client.deployments.get_scoring_url(deployment)
+    #scoring_endpoint = client.deployments.get_scoring_url(deployment)
+    scoring_endpoint = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
     return client, char_to_int, int_to_char, n_vocab, scoring_endpoint
 
@@ -40,7 +42,7 @@ def predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint
     for i in range(100):
         text = np.reshape(text1, (1, len(text1), 1))
         text = text /float(n_vocab)
-        scoring_payload = {'values': text}
+        scoring_payload = {'values': text.tolist()}
         predict = client.deployments.score(scoring_endpoint, scoring_payload)
         #predict = model.predict(text, verbose = 0)
         index = np.argmax(predict)
@@ -53,9 +55,10 @@ def predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint
     return out
 
 '''
-model, char_to_int, int_to_char, n_vocab = init()
+client, char_to_int, int_to_char, n_vocab, scoring_endpoint = init()
 
-text_in = "alice was beginning to get very tired of sitting by her sister on thebank, and of having nothing to."
+text_in = "so she was considering in her own mind (as well as she could, for the hot day made her feel very sle"
 
-text = predict(text_in, char_to_int, int_to_char, model, n_vocab)
-print(len(text))'''
+text = predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint)
+print(text)
+'''

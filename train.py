@@ -29,8 +29,6 @@ voc = open("variables/n_vocab.pkl", "wb")
 pickle.dump(n_vocab, voc)
 voc.close()
 
-print("total characters", n_chars)
-print("total vocab", n_vocab)
 
 seq_length = 100
 dataX = []
@@ -43,7 +41,16 @@ for i in range(0, n_chars - seq_length, 1):
     dataY.append(char_to_int[seq_out])
 
 n_patterns = len(dataX)
+
+print("total characters :", n_chars)
+print("\n")
+print("total vocab :", n_vocab)
+print("\n")
 print("total patterns :", n_patterns)
+print("\n")
+print("DataX Sample :", dataX[1])
+print("\n")
+print("DataY Sample :", dataY[1])
 
 X = np.reshape(dataX, (n_patterns, seq_length, 1))
 X =X/ float(n_vocab)
@@ -60,11 +67,11 @@ model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss = 'categorical_crossentropy', optimizer='adam')
 
-filepath = "weights/weights-improvement-{epoch:02d}-{loss:.4f}-biggee.hdf5"
+filepath = "weights/weights-improvement-{epoch:02d}-{loss:.4f}-biggeer.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose = 1, save_best_only=True, mode = 'min')
 callbacks_list = [checkpoint]
 
-model = load_model("weights-improvement-02-2.5458-biggeer.hdf5")
+#model = load_model("weights/weights-improvement-02-2.2221-biggee.hdf5")
 
 model.fit(X, y, epochs = 50, batch_size=64, callbacks=callbacks_list)
 model.save("model.hdf5", model)
