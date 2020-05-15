@@ -38,6 +38,10 @@ $compile.py
 
 ```
 
+## Output
+[![Watch the video](https://github.com/Shaashwat05/Predictive_speech/blob/master/output.png)](https://github.com/Shaashwat05/Predictive_speech/blob/master/output.mp4)
+
+
 ## Built With
 
 * [python](https://www.python.org/) - The software used
