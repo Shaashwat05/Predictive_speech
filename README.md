@@ -51,10 +51,6 @@ $compile.py
 * [**Shaashwat Agrawal**](https://github.com/Shaashwat05) Authors 
 
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-
 ## Documentation
 
 The whole documentation and explanation of code as well as concepts can be found in this article : https://iot4beginners.com/predictive-speech-with-raspberry-pi-and-deep-learning/
