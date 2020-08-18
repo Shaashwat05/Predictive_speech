@@ -38,6 +38,10 @@ $compile.py
 
 ```
 
+## Output
+[![Watch the video](https://github.com/Shaashwat05/Predictive_speech/blob/master/output.png)](https://github.com/Shaashwat05/Predictive_speech/blob/master/output.mp4)
+
+
 ## Built With
 
 * [python](https://www.python.org/) - The software used
@@ -47,8 +51,7 @@ $compile.py
 * [**Shaashwat Agrawal**](https://github.com/Shaashwat05) Authors 
 
 
-## Acknowledgments
+## Documentation
 
-* Hat tip to anyone whose code was used
-
+The whole documentation and explanation of code as well as concepts can be found in this article : https://iot4beginners.com/predictive-speech-with-raspberry-pi-and-deep-learning/
 
