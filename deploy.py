@@ -21,9 +21,7 @@ cmdstring = 'tar -zcvf ' + tar_filename + ' ' + filename
 os.system(cmdstring)
 
 
-
-
-
+# defining model specifications for IBM support
 model_props = {
     client.repository.ModelMetaNames.NAME: 'Speech - compressed keras model',
     client.repository.ModelMetaNames.FRAMEWORK_NAME: 'tensorflow',
@@ -38,10 +36,10 @@ published_model_details = client.repository.store_model(model='model.tgz', meta_
 model_uid = client.repository.get_model_uid(published_model_details)
 print(model_uid)
 
-
-
+# Main deployment used for prediction
 deployment = client.deployments.create(model_uid, 'Keras Speech recognition through compressed file.')
 
+# required variable for prediction
 dp = open("variables/deployment.pkl", 'wb')
 pickle.dump(dp, deployment)
 dp.close()

@@ -5,7 +5,7 @@ import pickle
 from watson_machine_learning_client import WatsonMachineLearningAPIClient
 
 
-def init():
+def init(): # initializing IBM credentials and model
     model = load_model("weights/model.hdf5")
 
     
@@ -33,18 +33,22 @@ def init():
 
 
 
-def predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint):
+def predict(text_in, char_to_int, int_to_char, client, n_vocab, scoring_endpoint):  # prediction of speech
     text1=[]
     out = ''
+
     print(text_in)
     for i in text_in:
         text1.append(char_to_int[i]) 
+
     for i in range(100):
         text = np.reshape(text1, (1, len(text1), 1))
         text = text /float(n_vocab)
+
         scoring_payload = {'values': text.tolist()}
         predict = client.deployments.score(scoring_endpoint, scoring_payload)
         #predict = model.predict(text, verbose = 0)
+
         index = np.argmax(predict)
         result = int_to_char[index]
         #seq_in = [int_to_char[value] for value in text1]

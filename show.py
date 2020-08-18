@@ -1,7 +1,7 @@
 import pygame
 import time
 
-def show_init():
+def show_init(): # initialize pygame variables like screeen
     pygame.init()
 
     screen_size=(1500, 600)
@@ -11,19 +11,19 @@ def show_init():
 
     return screen
 
-def paint(screen, txt, posx, posy):
-    font = pygame.font.Font('freesansbold.ttf', 18) 
 
+def paint(screen, txt, posx, posy): # function to show converted speech
+
+    green = (0, 255, 0) 
+    
+    font = pygame.font.Font('freesansbold.ttf', 18) 
     screen.fill((0, 0, 0), rect=[posx, posy, (font.size(txt[0])[0]*100), 20])
 
     clock = pygame.time.Clock()
 
-    green = (0, 255, 0) 
-
     text = font.render(txt, True, green) 
     
-    # create a rectangular object for the 
-    # text surface object 
+    # create a rectangular object for the text surface object
     textRect = text.get_rect() 
     if((posx + textRect[2]) <= 800):
         textRect = textRect.move(posx, posy)
@@ -40,16 +40,13 @@ def paint(screen, txt, posx, posy):
             screen.blit(text2, (posx +(font.size(txt[:i])[0]), posy)) 
             pygame.display.update()
             clock.tick(12)
-    
 
-    #if(count == 1):
     posx += textRect[2]
     
     return pygame.display.get_surface(), posx, posy
 
 
-
-def pred_show(screen, txt, posx, posy):
+def pred_show(screen, txt, posx, posy): # function to show predicted speech
 
     green = (0, 255, 0) 
     blue = (0, 0, 128) 
@@ -57,8 +54,8 @@ def pred_show(screen, txt, posx, posy):
     font = pygame.font.Font('freesansbold.ttf', 18) 
 
     text = font.render(txt, True, green, blue) 
-    # create a rectangular object for the 
-    # text surface object 
+
+    # create a rectangular object for the text surface object 
     textRect = text.get_rect() 
     if((posx + textRect[2]) <= 800):
         print(str(posx+textRect[2])+ "ii")
