@@ -48,7 +48,7 @@ $compile.py
 ## Author
 [![LinkedIn-profile](https://img.shields.io/badge/LinkedIn-Profile-teal.svg)](https://www.linkedin.com/in/shaashwat-agrawal-1904a117a/)
 
-* [**Shaashwat Agrawal**](https://github.com/Shaashwat05) Authors 
+* [**Shaashwat Agrawal**](https://github.com/Shaashwat05)
 
 
 ## Documentation
